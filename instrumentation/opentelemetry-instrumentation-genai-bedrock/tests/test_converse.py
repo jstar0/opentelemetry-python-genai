@@ -328,9 +328,7 @@ def test_extract_converse_request_no_content(tracer_provider) -> None:
 
 def test_extract_converse_request_tuple_arrays(tracer_provider) -> None:
     handler = TelemetryHandler(tracer_provider=tracer_provider)
-    messages = (
-        {"role": "user", "content": ({"text": "hello"},)},
-    )
+    messages = ({"role": "user", "content": ({"text": "hello"},)},)
     system = ({"text": "Be concise"},)
     tool_config = {
         "tools": (
@@ -345,7 +343,11 @@ def test_extract_converse_request_tuple_arrays(tracer_provider) -> None:
 
     with handler.inference(provider="aws.bedrock") as invocation:
         extract_converse_request(
-            {"messages": messages, "system": system, "toolConfig": tool_config},
+            {
+                "messages": messages,
+                "system": system,
+                "toolConfig": tool_config,
+            },
             invocation,
         )
 
